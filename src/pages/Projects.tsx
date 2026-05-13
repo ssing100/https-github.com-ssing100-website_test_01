@@ -1,113 +1,79 @@
 import { motion } from 'motion/react';
-import { Filter } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowUpRight, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const projects = [
+const PROJECTS = [
   {
-    title: "EcoSphere Web",
-    category: "Brand Design",
-    year: "2024",
-    image: "https://picsum.photos/seed/eco/1200/800",
+    title: "Vehicle Records Database",
+    category: "Fullstack / Database",
+    description: "A secure inventory management system with real-time sync and administrative roles.",
+    link: "/registry",
+    image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2600&auto=format&fit=crop"
   },
   {
-    title: "Cipher Crypto",
-    category: "Fintech",
-    year: "2023",
-    image: "https://picsum.photos/seed/cipher/1200/800",
+    title: "Minimalist E-Commerce",
+    category: "UI/UX / Frontend",
+    description: "A focus on negative space and typography for a premium shopping experience.",
+    link: "#",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2600&auto=format&fit=crop"
   },
   {
-    title: "Vantage Real Estate",
-    category: "UI/UX",
-    year: "2024",
-    image: "https://picsum.photos/seed/vantage/1200/800",
+    title: "Lumina Brand Identity",
+    category: "Graphic Design",
+    description: "Conceptual brand system exploring geometric forms and monochromatic palettes.",
+    link: "#",
+    image: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2564&auto=format&fit=crop"
   },
   {
-    title: "Orbit SaaS App",
-    category: "Product",
-    year: "2023",
-    image: "https://picsum.photos/seed/orbit/1200/800",
+    title: "Architectural Visualizer",
+    category: "3D / WebGL",
+    description: "Interactive browser-based visualization of minimalist spatial structures.",
+    link: "#",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2600&auto=format&fit=crop"
   }
 ];
 
-const categories = ["All", "Brand Design", "Fintech", "UI/UX", "Product"];
-
 export default function Projects() {
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const filteredProjects = activeCategory === "All" 
-    ? projects 
-    : projects.filter(p => p.category === activeCategory);
-
   return (
-    <div className="pt-[150px] pb-20 px-8 max-w-7xl mx-auto min-h-screen">
-      <header className="mb-32">
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.3 }}
-          className="text-[10px] uppercase tracking-[0.5em] font-black mb-6"
-        >
-          Work Archive / 02
-        </motion.p>
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-[60px] md:text-[100px] font-black tracking-tighter leading-[0.9] uppercase"
-        >
-          Selected <br />
-          <span className="text-stroke">Works.</span>
-        </motion.h1>
+    <div className="min-h-screen bg-black pt-32 pb-20 px-6 lg:px-20 text-white">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-20"
+      >
+        <p className="text-amber-500 font-mono text-xs tracking-widest uppercase mb-4">Selected Works</p>
+        <h1 className="text-5xl md:text-7xl font-serif italic">Archive / 2026</h1>
+      </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="flex flex-wrap gap-8 items-center border-t border-white/10 mt-16 pt-10"
-        >
-          <Filter className="w-4 h-4 text-white/30" />
-          {categories.map((cat) => (
-            <button 
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-300 ${
-                activeCategory === cat 
-                  ? "text-white border-b-2 border-white pb-1" 
-                  : "text-white/30 hover:text-white"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </motion.div>
-      </header>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-32">
-        {filteredProjects.map((project, idx) => (
-          <motion.article 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+        {PROJECTS.map((project, index) => (
+          <motion.div 
             key={project.title}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="group flex flex-col pt-12 border-t border-white/5"
+            transition={{ delay: index * 0.1 }}
+            className="group"
           >
-             <div className="text-[10px] uppercase tracking-widest text-white/30 mb-8 font-bold flex justify-between">
-              <span>{project.category}</span>
-              <span>{project.year}</span>
+            <div className="relative aspect-[4/3] bg-zinc-900 rounded-sm overflow-hidden mb-6 border border-white/5">
+              <div 
+                className="absolute inset-0 bg-cover bg-center grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-60"
+                style={{ backgroundImage: `url(${project.image})` }}
+              />
+              <Link to={project.link} className="absolute inset-0 z-10" />
             </div>
             
-            <div className="aspect-[16/10] overflow-hidden bg-[#1A1A1A] border border-white/10 p-2 grayscale group-hover:grayscale-0 transition-all duration-700">
-               <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-1000 scale-105 group-hover:scale-100"
-                  referrerPolicy="no-referrer"
-                />
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-amber-500 mb-2">{project.category}</p>
+                <h3 className="text-2xl font-serif italic mb-3 group-hover:text-amber-500 transition-colors">{project.title}</h3>
+                <p className="text-sm text-white/40 font-light max-w-sm">{project.description}</p>
+              </div>
+              <div className="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                <ArrowUpRight className="w-4 h-4" />
+              </div>
             </div>
-            
-            <div className="mt-8">
-               <h2 className="text-4xl font-black uppercase tracking-tighter group-hover:italic group-hover:pl-4 transition-all">{project.title}</h2>
-            </div>
-          </motion.article>
+          </motion.div>
         ))}
       </div>
     </div>

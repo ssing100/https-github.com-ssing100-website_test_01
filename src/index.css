@@ -1,24 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  
-  --color-brand-bg: #0A0A0A;
-  --color-brand-text: #F5F5F5;
+  --font-serif: "Playfair Display", serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-gold: #f59e0b;
+  --color-gold-hover: #d97706;
+  --color-dark-bg: #050505;
+  --color-dark-card: #0a0a0a;
+  --color-dark-border: #1a1a1a;
+  --color-dark-input: #0f0f0f;
+  --color-dark-input-border: #222;
 }
 
 @layer base {
   body {
-    @apply bg-brand-bg text-brand-text antialiased font-sans;
+    @apply bg-black text-[#e0e0e0] antialiased font-sans;
   }
-}
-
-.text-stroke {
-  -webkit-text-stroke: 1.5px #F5F5F5;
-  color: transparent;
-}
-
-.tracking-ultra {
-  tracking: 0.4em;
 }

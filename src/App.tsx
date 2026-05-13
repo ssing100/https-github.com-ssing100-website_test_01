@@ -1,17 +1,13 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
+import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Projects from './pages/Projects';
 import Gallery from './pages/Gallery';
 import About from './pages/About';
-import { useEffect } from 'react';
+import Registry from './pages/Registry';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -29,46 +25,11 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <motion.div key={location.pathname}>
         <Routes location={location}>
-          <Route path="/" element={
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Home />
-            </motion.div>
-          } />
-          <Route path="/projects" element={
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Projects />
-            </motion.div>
-          } />
-          <Route path="/gallery" element={
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Gallery />
-            </motion.div>
-          } />
-          <Route path="/about" element={
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <About />
-            </motion.div>
-          } />
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/registry" element={<Registry />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -77,7 +38,7 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <div className="min-h-screen font-sans selection:bg-black selection:text-white">
+    <div className="min-h-screen bg-black font-sans selection:bg-amber-500 selection:text-black">
       <Router>
         <ScrollToTop />
         <Navbar />
