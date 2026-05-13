@@ -1,0 +1,67 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Car Domain Helpers ---
+    function isValidCar(data) {
+      return data.keys().hasAll(['make', 'model', 'year', 'price', 'createdAt', 'updatedAt'])
+        && data.keys().size() == 6
+        && data.make is string && data.make.size() > 0 && data.make.size() <= 100
+        && data.model is string && data.model.size() > 0 && data.model.size() <= 100
+        && data.year is int && data.year >= 1886 && data.year <= 2100
+        && data.price is int && data.price >= 0
+        && data.createdAt == request.time
+        && data.updatedAt == request.time;
+    }
+
+    function isValidCarUpdate(data) {
+      return data.make is string && data.make.size() > 0 && data.make.size() <= 100
+        && data.model is string && data.model.size() > 0 && data.model.size() <= 100
+        && data.year is int && data.year >= 1886 && data.year <= 2100
+        && data.price is int && data.price >= 0
+        && data.updatedAt == request.time;
+    }
+
+    // --- Rules ---
+    match /cars/{carId} {
+      // Anyone can read cars
+      allow read: if true;
+
+      // Only signed-in users can write
+      allow create: if isSignedIn() 
+        && isValidId(carId)
+        && isValidCar(incoming());
+
+      allow update: if isSignedIn()
+        && isValidCarUpdate(incoming())
+        && incoming().createdAt == existing().createdAt // Immutable
+        && (
+          incoming().diff(existing()).affectedKeys().hasOnly(['make', 'model', 'year', 'price', 'updatedAt'])
+        );
+
+      allow delete: if isSignedIn();
+    }
+  }
+}

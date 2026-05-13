@@ -1,0 +1,24 @@
+{
+  "entities": {
+    "Car": {
+      "title": "Car",
+      "description": "Information about a vehicle in the registry",
+      "type": "object",
+      "properties": {
+        "make": { "type": "string", "description": "The manufacturer of the car" },
+        "model": { "type": "string", "description": "The specific model name" },
+        "year": { "type": "integer", "description": "The year the car was released" },
+        "price": { "type": "integer", "description": "The current or original price" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the record was created" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "When the record was last updated" }
+      },
+      "required": ["make", "model", "year", "price"]
+    }
+  },
+  "firestore": {
+    "/cars/{carId}": {
+      "schema": "Car",
+      "description": "A collection of car records"
+    }
+  }
+}
