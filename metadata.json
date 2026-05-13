@@ -1,6 +1,6 @@
 {
-  "name": "Lumina Portfolio",
-  "description": "A sophisticated, high-impact personal portfolio featuring projects, a visual gallery, and a direct contact system.",
+  "name": "Car Registry & Search",
+  "description": "A comprehensive database for tracking car prices, models, and specifications with advanced search and filtering capabilities.",
   "requestFramePermissions": [],
   "majorCapabilities": []
 }
